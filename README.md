@@ -1,224 +1,114 @@
-# 🧠 Deep Learning Frameworks for Liver Fibrosis Detection  
-### Comparative CNN & Vision Transformer Study using Ultrasound Images(F0–F4)
+# 🧠 Deep Learning Frameworks for Liver Fibrosis Detection
 
-![Python](https://img.shields.io/badge/Python-3.10-blue)
-![PyTorch](https://img.shields.io/badge/Framework-PyTorch-red)
-![Status](https://img.shields.io/badge/Project-Research%20Grade-success)
-![Domain](https://img.shields.io/badge/Domain-Medical%20AI-purple)
+A comprehensive comparative study of multiple deep learning architectures for multi-class liver fibrosis staging (F0–F4) using B-mode ultrasound images.
+
+This project evaluates CNN-based transfer learning models and Vision Transformers to identify the most effective architecture for medical image classification of liver fibrosis.
 
 ---
 
-## 📌 Overview
-
-This repository contains the complete implementation of a **research-grade comparative study** evaluating deep learning frameworks for multi-class liver fibrosis staging (F0–F4) using B-mode ultrasound images.
-
-The project systematically compares CNN and Vision Transformer architectures under a unified pipeline to analyze:
-
-- Predictive performance  
-- Generalization ability  
-- Computational efficiency  
-- Clinical interpretability  
-
-This work is based on the research paper:
-
-> **A Comprehensive Comparative Study of Deep Learning Frameworks for Liver Fibrosis Detection Using B-mode Ultrasound Images**
+## 🚀 Project Highlights
+- Comparative study of **5 deep learning models**
+- Medical imaging classification using ultrasound data
+- Transfer learning vs custom CNN analysis
+- Vision Transformer dual-branch architecture
+- Grad-CAM explainability for model interpretation
+- Class imbalance handling using weighted sampling
+- Stratified cross-validation evaluation
 
 ---
 
-## 🎯 Problem Statement
+## 🏥 Problem Statement
+Liver fibrosis is a progressive disease that can lead to cirrhosis and liver failure if not detected early.  
+Manual ultrasound interpretation is difficult due to subtle texture differences between fibrosis stages.
 
-Liver fibrosis progresses across five stages:
-
-| Stage | Description |
-|------|-------------|
-| F0 | No fibrosis |
-| F1 | Mild fibrosis |
-| F2 | Moderate fibrosis |
-| F3 | Advanced fibrosis |
-| F4 | Cirrhosis |
-
-Ultrasound-based staging is difficult due to subtle texture variations between adjacent stages.  
-This project explores whether deep learning can reliably learn these patterns.
+This project builds an AI-based system to automatically classify liver fibrosis stages (F0–F4) from ultrasound images.
 
 ---
 
-## 🏗 Implemented Deep Learning Models
-
-### 🔹 Custom CNN (Baseline)
-- 4 convolutional blocks  
-- BatchNorm + ReLU  
-- Dropout regularization  
-- Trained from scratch  
-
-### 🔹 ResNet50 (Transfer Learning)
-- ImageNet pretrained  
-- Residual connections  
-- Strong medical imaging baseline  
-
-### 🔹 MobileNetV3-Large (Efficient Model)
-- Lightweight architecture  
-- Deployment-friendly  
-- Excellent performance vs size trade-off  
-
-### 🔹 EfficientNet-B0 (Best Performer)
-- Compound scaling  
-- 5-fold stratified cross-validation  
-- Highest overall accuracy & macro-F1  
-
-### 🔹 Dual-Branch Vision Transformer (Novel Contribution)
-- RGB branch + CLAHE-enhanced branch  
-- ViT-Tiny backbone  
-- Feature fusion using MLP  
-- Global context modeling  
+## 🧠 Models Implemented
+- EfficientNet-B0 (Best performing)
+- ResNet50
+- MobileNetV3-Large
+- Custom CNN (baseline)
+- Dual-Branch Vision Transformer (RGB + CLAHE)
 
 ---
 
-## 🧪 Experimental Pipeline
+## 📊 Results Summary
 
-### 📂 Dataset
-- Liver fibrosis ultrasound dataset (Kaggle)
-- 6,323 images
-- 5-class classification (F0–F4)
-- Class imbalance handled explicitly
+| Model | Accuracy | Macro F1 Score |
+|------|---------|---------------|
+| EfficientNet-B0 | 97.88% | 0.971 |
+| ResNet50 | 97.31% | 0.964 |
+| MobileNetV3 | 97.47% | 0.963 |
+| Dual-Branch ViT | 94.86% | 0.929 |
+| Custom CNN | 64.66% | 0.575 |
 
-### ⚙ Preprocessing
-- Resize: 224×224  
-- Normalization  
-- Data augmentation:
-  - Rotation
-  - Brightness/contrast
-  - Gaussian blur
-  - Elastic deformation
-
-### 🧠 CLAHE Enhancement
-Contrast Limited Adaptive Histogram Equalization used for:
-- Texture enhancement  
-- Dual-branch transformer fusion input  
-
-### ⚖ Class Imbalance Handling
-- WeightedRandomSampler  
-- Class-weighted cross-entropy  
-
-### 🧮 Training Setup
-- Optimizer: AdamW  
-- Mixed Precision Training (AMP)  
-- LR Scheduler: ReduceLROnPlateau  
-- GPU training enabled  
+EfficientNet-B0 achieved the best performance across stratified cross-validation.
 
 ---
 
-## 📊 Evaluation Metrics
-
-- Accuracy  
-- **Macro-F1 (primary metric)**  
-- AUC (one-vs-rest multiclass)  
-- Confusion matrix  
-- Precision/Recall per class  
-
-Macro-F1 used due to class imbalance and clinical relevance.
+## 🧾 Dataset
+- Liver Fibrosis Ultrasound Dataset (Kaggle)
+- 6323 B-mode ultrasound images
+- 5 classes: F0–F4
+- Imbalanced dataset handled using weighted sampling
 
 ---
 
-## 📈 Results Summary
-
-| Model | Accuracy | Macro-F1 | AUC |
-|------|---------|---------|------|
-| EfficientNet-B0 | **0.9788** | **0.9711** | **0.9984** |
-| ResNet50 | 0.9731 | 0.9645 | 0.9968 |
-| MobileNetV3 | 0.9747 | 0.9630 | 0.9983 |
-| Dual-Branch ViT | 0.9486 | 0.9293 | 0.9920 |
-| Custom CNN | 0.6466 | 0.5755 | 0.8970 |
-
-### 💡 Key Insights
-- Transfer learning >> training from scratch  
-- EfficientNet shows best generalization  
-- MobileNetV3 best lightweight deployment model  
-- ViT fusion promising but data-sensitive  
-- F2 stage most difficult due to clinical overlap  
+## ⚙️ Tech Stack
+- Python
+- PyTorch
+- OpenCV
+- Albumentations
+- Scikit-learn
+- Matplotlib
+- Vision Transformers (ViT)
+- Grad-CAM Explainability
 
 ---
 
-## 🔎 Explainable AI (Grad-CAM)
-
-Grad-CAM applied on CNN models to:
-- Visualize model attention regions  
-- Ensure focus on liver parenchyma  
-- Improve interpretability for clinical AI  
-
----
-
-## 💻 Tech Stack
-
-- Python  
-- PyTorch  
-- timm  
-- Albumentations  
-- OpenCV  
-- NumPy & Pandas  
-- Matplotlib  
+## 📈 Evaluation Metrics
+- Accuracy
+- Macro F1 Score
+- Confusion Matrix
+- One-vs-Rest AUC
+- Classification Report
 
 ---
 
-## ⚙️ Installation
+## 🔍 Explainability
+Grad-CAM visualization used to interpret CNN predictions and highlight important liver regions influencing model decisions.
 
-```bash
-git clone https://github.com/yourusername/Deep-Learning-Frameworks-for-Liver-Fibrosis-Detection.git
-cd Deep-Learning-Frameworks-for-Liver-Fibrosis-Detection
-pip install -r requirements.txt
+---
+
+## 📂 Repository Structure
+```
+├── liver_fibrosis_models.ipynb
+├── research_paper.pdf
+├── requirements.txt
+├── results/
+└── README.md
 ```
 
 ---
 
-## 🚀 Training
-
-```bash
-python train_resnet50.py
-python train_mobilenet.py
-python train_efficientnet.py
-python train_dual_vit.py
-```
-
----
-
-## 📁 Repository Structure
-
-```
-custom_cnn/
-resnet50/
-mobilenetv3/
-efficientnet/
-dual_branch_vit/
-gradcam/
-utils/
-results/
-```
-
----
-
-## 🚀 Future Improvements
-
-- Larger Vision Transformers  
-- External dataset validation  
-- Clinical deployment optimization  
-- Multi-modal ultrasound fusion  
-- Semi-supervised learning  
-
----
-
-## 📜 Citation
-
-```
-@article{liverfibrosis_dl_2026,
-title={Comparative Deep Learning Frameworks for Liver Fibrosis Detection},
-author={Uma MP et al.},
-year={2026}
-}
-```
+## 📜 Research Paper
+This work is part of our research study:  
+**"A Comparative Study of Deep Learning Frameworks for Liver Fibrosis Detection Using Ultrasound Images"**
 
 ---
 
 ## 👩‍💻 Author
-
 **Uma MP**  
-AI & Data Science Engineer  
-Deep Learning • Medical Imaging • NLP
+Information Science Engineering  
+AI & Data Science Enthusiast | MERN Developer  
+
+---
+
+## ⭐ Future Improvements
+- Deploy as web app for clinical usage
+- Add model ensemble
+- Hyperparameter tuning
+- Larger dataset training
+- Real-time ultrasound prediction system
