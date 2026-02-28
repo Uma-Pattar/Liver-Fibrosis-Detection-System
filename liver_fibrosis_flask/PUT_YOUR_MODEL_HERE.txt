@@ -1,0 +1,4 @@
+Place your trained model file in this folder (project root) with the exact name:
+- liver_fibrosis_stage_model.h5
+
+Copy/paste your trained model here.

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Report - Woody</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="{{ url_for('static', filename='img/favicon.ico') }}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{{ url_for('static', filename='lib/animate/animate.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+    <style>
+        /* Progress bar styling consistent with theme */
+        .prob-track {
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .prob-fill {
+            height: 10px;
+            background: var(--primary);
+            width: 0%;
+        }
+
+        /* Print styles */
+        @media print {
+            .navbar, .page-header, .back-to-top, .no-print { display: none !important; }
+            .container-xxl { padding: 0 !important; }
+            body { background: #fff !important; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 no-print">
+        <a href="{{ url_for('index') }}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <h2 class="m-0 text-primary">Liver Fibrosis AI</h2>
+        </a>
+
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="{{ url_for('index') }}" class="nav-item nav-link">Home</a>
+                <a href="{{ url_for('about') }}" class="nav-item nav-link">About</a>
+                <a href="{{ url_for('predict') }}" class="nav-item nav-link">Prediction</a>
+                <a href="{{ url_for('history') }}" class="nav-item nav-link active">History</a>
+                <a href="{{ url_for('logout') }}" class="nav-item nav-link">Logout</a>
+            </div>
+            <a href="#" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Get A Quote<i class="fa fa-arrow-right ms-3"></i></a>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5 mb-5 no-print">
+        <div class="container py-5">
+            <h1 class="display-3 text-white mb-3 animated slideInDown">Report</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="text-white" href="{{ url_for('index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a class="text-white" href="{{ url_for('history') }}">History</a></li>
+                    <li class="breadcrumb-item text-white active" aria-current="page">Report</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+    <!-- Report Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-4">
+
+                <!-- Left: Details -->
+                <div class="col-lg-7 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="bg-light rounded p-4 p-md-5 h-100">
+
+                        <div class="d-flex align-items-start justify-content-between gap-3 mb-4">
+                            <div>
+                                <h3 class="mb-1">Detailed Result</h3>
+                                <p class="text-muted mb-0">Detailed result for this case.</p>
+                            </div>
+                            <button onclick="window.print()" class="btn btn-outline-primary no-print">
+                                <i class="fa fa-print me-2"></i>Print
+                            </button>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <div class="bg-white border rounded p-3">
+                                    <div class="small text-muted">Predicted Stage</div>
+                                    <div class="h4 mb-0">{{ row.stage }}</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="bg-white border rounded p-3">
+                                    <div class="small text-muted">Confidence</div>
+                                    <div class="h4 mb-0">{{ "%.2f"|format(row.confidence * 100) }}%</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="bg-white border rounded p-3">
+                                    <div class="small text-muted">Created</div>
+                                    <div class="fw-semibold">{{ row.created_at.strftime("%Y-%m-%d %H:%M") }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h5 class="mt-4 mb-3">Probabilities</h5>
+
+                        {% for cls, p in probs_sorted %}
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="fw-semibold">{{ cls }}</div>
+                                <div class="text-muted">{{ "%.2f"|format(p * 100) }}%</div>
+                            </div>
+                            <div class="prob-track mt-2">
+                                <div class="prob-fill" style="width: {{ p * 100 }}%"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <div class="d-flex flex-wrap gap-2 mt-4 no-print">
+                            <a href="{{ url_for('history') }}" class="btn btn-outline-secondary">
+                                <i class="fa fa-arrow-left me-2"></i>Back to History
+                            </a>
+                            <a href="{{ url_for('predict') }}" class="btn btn-primary">
+                                <i class="fa fa-plus me-2"></i>New Prediction
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Right: Image -->
+                <div class="col-lg-5 wow fadeIn" data-wow-delay="0.2s">
+                    <div class="border rounded p-4 p-md-5 h-100">
+                        <h4 class="mb-1">Uploaded Image</h4>
+                        <p class="text-muted mb-3">Click image to open full size.</p>
+
+                        <a href="{{ url_for('static', filename='uploads/' + row.image_filename) }}" target="_blank">
+                            <div class="bg-light border rounded p-2">
+                                <img
+                                    alt="uploaded image"
+                                    class="img-fluid w-100"
+                                    style="max-height: 520px; object-fit: contain;"
+                                    src="{{ url_for('static', filename='uploads/' + row.image_filename) }}">
+                            </div>
+                        </a>
+
+                        <div class="bg-light rounded p-4 mt-4">
+                            <h6 class="mb-2">Disclaimer</h6>
+                            <p class="text-muted mb-0">
+                                This tool is for academic/demo use. Clinical decisions should be made by qualified professionals.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Report End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-0 back-to-top no-print">
+        <i class="bi bi-arrow-up"></i>
+    </a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='lib/wow/wow.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/easing/easing.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/waypoints/waypoints.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/counterup/counterup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/owlcarousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/isotope/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/lightbox/js/lightbox.min.js') }}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{{ url_for('static', filename='js/main_one.js') }}"></script>
+
+</body>
+</html>
